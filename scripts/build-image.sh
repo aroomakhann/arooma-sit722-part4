@@ -1,0 +1,1 @@
+docker compose -f docker-compose.yml up --build -d --platform linux/amd64

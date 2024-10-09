@@ -1,0 +1,46 @@
+version: '3.9' 
+services:
+  book_catalog:
+    build:
+      context: ./book_catalog
+      dockerfile: Dockerfile
+    image: arooma123acr.azurecr.io/bookcatalog:latest  
+    ports:
+      - "3001:80"  
+    environment:
+      - DATABASE_URL=postgresql://task8c_user:O3mVNfXg4063shEDJCwqyTClXUeuqEvL@dpg-cs2tm968ii6s738bvtt0-a.oregon-postgres.render.com/task8c
+    depends_on:
+      - postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    platform: linux/amd64 
+
+  inventory_management:
+    build:
+      context: ./inventory_management
+      dockerfile: Dockerfile
+    image: arooma123acr.azurecr.io/inventorymanage:latest  
+    ports:
+      - "3002:80"  
+    environment:
+      - DATABASE_URL=postgresql://task8c_user:O3mVNfXg4063shEDJCwqyTClXUeuqEvL@dpg-cs2tm968ii6s738bvtt0-a.oregon-postgres.render.com/task8c
+    depends_on:
+      - postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    platform: linux/amd64  
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: task8c_user
+      POSTGRES_PASSWORD: lAog686j3z2HZsKEZ8BH9RCut7FNo6bD
+      POSTGRES_DB: task8c
+    ports:
+      - "5432:5432"  
